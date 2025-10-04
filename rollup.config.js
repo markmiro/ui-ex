@@ -9,20 +9,20 @@ import { readFileSync } from 'fs';
 const packageJson = JSON.parse(readFileSync('./package.json', 'utf8'));
 
 export default async () => {
-  const tailwindcss = (await import('tailwindcss')).default;
+  const tailwindcssPostcss = (await import("@tailwindcss/postcss")).default;
   
   return [
     {
-      input: 'src/index.ts',
+      input: "src/index.ts",
       output: [
         {
           file: packageJson.main,
-          format: 'cjs',
+          format: "cjs",
           sourcemap: true,
         },
         {
           file: packageJson.module,
-          format: 'esm',
+          format: "esm",
           sourcemap: true,
         },
       ],
@@ -30,19 +30,19 @@ export default async () => {
         resolve(),
         commonjs(),
         typescript({
-          tsconfig: './tsconfig.json',
+          tsconfig: "./tsconfig.json",
         }),
         postcss({
           extract: true,
           minimize: true,
-          plugins: [tailwindcss],
+          plugins: [tailwindcssPostcss],
         }),
       ],
-      external: ['react', 'react-dom'],
+      external: ["react", "react-dom"],
     },
     {
-      input: 'dist/index.d.ts',
-      output: [{ file: 'dist/index.d.ts', format: 'esm' }],
+      input: "dist/index.d.ts",
+      output: [{ file: "dist/index.d.ts", format: "esm" }],
       plugins: [dts()],
       external: [/\.css$/],
     },
