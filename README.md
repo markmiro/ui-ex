@@ -63,40 +63,14 @@ function App() {
 - **Outline**: White background with border and gray text
 - **Ghost**: Transparent background with gray text
 
-### Button Sizes
-
-- **Small**: `px-3 py-1.5 text-sm`
-- **Medium**: `px-4 py-2 text-base` (default)
-- **Large**: `px-6 py-3 text-lg`
-
-## Tailwind CSS v4 Features
-
-This library takes advantage of Tailwind CSS v4's new features:
-
-- **CSS-First Configuration**: Theme customization is done directly in CSS using the `@theme` directive
-- **High-Performance Engine**: Faster build times and improved performance
-- **Native Cascade Layers**: Better control over style specificity
-- **Custom CSS Properties**: Components use CSS custom properties for better theming support
-
-### Customization
-
-You can customize the library's theme by overriding CSS custom properties in your project:
-
-```css
-@theme {
-  --color-primary-600: #your-brand-color;
-  --color-primary-700: #your-brand-color-darker;
-}
-```
-
 ## Development
 
 To contribute to this library:
 
 1. Clone the repository
-2. Install dependencies: `npm install`
-3. Build the library: `npm run build`
-4. Run type checking: `npm run type-check`
+2. Install dependencies: `pnpm install`
+3. Build the library: `pnpm run build`
+4. Run type checking: `pnpm run type-check`
 
 ## License
 
