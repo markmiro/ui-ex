@@ -10,7 +10,7 @@ const packageJson = JSON.parse(readFileSync('./package.json', 'utf8'));
 
 export default async () => {
   const tailwindcssPostcss = (await import("@tailwindcss/postcss")).default;
-  
+
   return [
     {
       input: "src/index.ts",
