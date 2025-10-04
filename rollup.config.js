@@ -4,41 +4,47 @@ import typescript from '@rollup/plugin-typescript';
 import postcss from 'rollup-plugin-postcss';
 import dts from 'rollup-plugin-dts';
 
-const packageJson = require('./package.json');
+import { readFileSync } from 'fs';
 
-export default [
-  {
-    input: 'src/index.ts',
-    output: [
-      {
-        file: packageJson.main,
-        format: 'cjs',
-        sourcemap: true,
-      },
-      {
-        file: packageJson.module,
-        format: 'esm',
-        sourcemap: true,
-      },
-    ],
-    plugins: [
-      resolve(),
-      commonjs(),
-      typescript({
-        tsconfig: './tsconfig.json',
-      }),
-      postcss({
-        extract: true,
-        minimize: true,
-        plugins: [require('tailwindcss')],
-      }),
-    ],
-    external: ['react', 'react-dom'],
-  },
-  {
-    input: 'dist/index.d.ts',
-    output: [{ file: 'dist/index.d.ts', format: 'esm' }],
-    plugins: [dts()],
-    external: [/\.css$/],
-  },
-];
+const packageJson = JSON.parse(readFileSync('./package.json', 'utf8'));
+
+export default async () => {
+  const tailwindcss = (await import('tailwindcss')).default;
+  
+  return [
+    {
+      input: 'src/index.ts',
+      output: [
+        {
+          file: packageJson.main,
+          format: 'cjs',
+          sourcemap: true,
+        },
+        {
+          file: packageJson.module,
+          format: 'esm',
+          sourcemap: true,
+        },
+      ],
+      plugins: [
+        resolve(),
+        commonjs(),
+        typescript({
+          tsconfig: './tsconfig.json',
+        }),
+        postcss({
+          extract: true,
+          minimize: true,
+          plugins: [tailwindcss],
+        }),
+      ],
+      external: ['react', 'react-dom'],
+    },
+    {
+      input: 'dist/index.d.ts',
+      output: [{ file: 'dist/index.d.ts', format: 'esm' }],
+      plugins: [dts()],
+      external: [/\.css$/],
+    },
+  ];
+};
